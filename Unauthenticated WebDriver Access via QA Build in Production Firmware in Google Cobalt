@@ -1,0 +1,120 @@
+# CVE-2026-XXXXX — Unauthenticated WebDriver Access via QA Build in Production Firmware in Google Cobalt
+
+> **Disclosure status:** Draft for coordinated disclosure. Replace `CVE-2026-XXXXX` with the identifier assigned by VulnCheck. This advisory is based on testing of one device/firmware configuration; other versions have not been established as affected.
+
+## Overview
+
+| Field | Details |
+|---|---|
+| Researcher | Yehia Elghaly |
+| Vendor / platform | Hisense Smart TV / VIDAA OS; Google Cobalt browser component (component ownership to be confirmed) |
+| Tested device | Hisense 55A57EXVT |
+| Tested firmware | `V0000.01.00a.P0220` |
+| Observed Cobalt build | `19.lts.5.205289-qa` |
+| Affected interface | Cobalt WebDriver HTTP service, TCP port `4444` |
+| Attack prerequisite | Network connectivity to the TV's exposed service; tested from the local network |
+| Authentication | No credentials or user pairing required in the tested configuration |
+| CVE | `CVE-2026-XXXXX` (placeholder) |
+| Vendor remediation | Not established from supplied evidence |
+| Public disclosure | Pending coordination with VulnCheck and vendor |
+
+## Vulnerability summary
+
+A retail Hisense VIDAA Smart TV was observed exposing a Cobalt WebDriver automation service over the local network without authentication. An unauthenticated network-adjacent party could interact with an existing browser automation session and execute JavaScript in the TV's user-interface browser context.
+
+The tested browser build reports the suffix `-qa`, consistent with a QA-oriented build. The research attributes the exposure to production deployment of an automation-enabled Cobalt build; the exact firmware configuration and causal mechanism require vendor confirmation.
+
+## Root cause and attack surface
+
+The security boundary between an untrusted local-network client and the TV's privileged browser/UI automation context is not enforced by authentication or pairing on the exposed WebDriver interface. The research report states the service was bound to all interfaces; the supplied remote-access evidence independently establishes LAN reachability, not the full bind configuration.
+
+**High-level attack path:** LAN reachability → unauthenticated WebDriver session access → JavaScript execution in the Cobalt UI context → access to browser storage and DOM → additional privacy, integrity, and availability impacts described below.
+
+## Observed security impact
+
+### 1. Unauthenticated browser automation and JavaScript execution
+
+The supplied console output records successful HTTP responses from WebDriver service and session endpoints, followed by successful changes to page styles, text, and DOM elements. An existing session was accessible even when creating a new session returned an error; this does not invalidate the observed existing-session access.
+
+### 2. User-interface manipulation / full-screen overlay
+
+The testing script altered page appearance and inserted a full-screen security-warning overlay. A photograph of the physical TV shows the injected warning rendered on the device. This demonstrates a plausible path to deceptive on-screen messaging and interference with normal UI operation.
+
+![Physical TV displaying researcher-injected warning overlay](evidence/physical-tv-ui-overlay.png)
+
+*Figure 1 — Physical-device photograph of the injected warning. The phone number and error code shown are demonstration text, not a genuine Hisense advisory.*
+
+![Console output documenting DOM changes](evidence/webdriver-ui-test-output.png)
+
+*Figure 2 — Test output reporting successful UI modifications and DOM verification.*
+
+### 3. Read/write access to ACR-related browser storage
+
+The ACR test output shows an `ACRSettingSwitch` localStorage value initially set to `1`, changed to `0`, verified in a separate readback, and restored to `1`. Other ACR-, advertising-, and recommendation-related keys were enumerated.
+
+**Scope limitation:** The evidence confirms browser-storage read/write capability; it does **not** by itself establish that the underlying ACR telemetry engine stopped transmitting, that the user was never shown a consent prompt, or that an ACR privacy preference was persistently changed across reboot/cloud synchronization.
+
+![ACR localStorage baseline and modification](evidence/acr-write-baseline.png)
+
+*Figure 3 — Baseline ACR-related keys and successful write/readback.*
+
+![ACR state restoration](evidence/acr-write-restore.png)
+
+*Figure 4 — Independent state readback and restoration to the original value.*
+
+### 4. Viewing-activity and device-state monitoring
+
+Researcher-produced monitoring output shows transitions among Netflix, YouTube, and Live TV/HDMI-related UI routes and changes in the volume value. These observations establish visibility into application/UI state and user interaction timing without credentials.
+
+**Scope limitation:** Application identifiers and UI routes do not necessarily prove access to the exact video title, program content, or complete viewing history. The observed data is sufficient to infer application usage patterns and certain interactions.
+
+![Researcher dashboard comparing Live TV and Netflix state](evidence/content-surveillance-dashboard.png)
+
+*Figure 5 — Dashboard showing detected app/input state, volume, and UI route.*
+
+![Continuous content-state monitoring output](evidence/content-surveillance-monitor.png)
+
+*Figure 6 — Console monitoring of application-route changes and volume updates.*
+
+### 5. Application data extraction and reported outbound exfiltration
+
+The supplied research report describes extraction of browser localStorage values and receipt of an outbound HTTP POST at researcher-controlled infrastructure from the TV's public IP. The accompanying extraction/exfiltration scripts implement this test path.
+
+**Evidence qualification:** Receiver-side HTTP logs or screenshots showing the received request and sanitized payload were not among the clearly identified supporting images for this advisory. Therefore, external delivery is recorded here as **researcher-reported** pending attachment of independent receiving-end evidence. Do not publish extracted secrets, tokens, private keys, MAC addresses, or identifiable user information.
+
+### 6. Additional exposed native functionality (requires scoped validation)
+
+The research report describes access to the `window.hisense` native bridge, including file and system-related APIs. The presence of exposed bridge methods should be documented separately from any claim that unrestricted operating-system file access or command execution has been demonstrated. Specific outcomes require matching successful execution logs and appropriate evidence.
+
+## Evidence inventory
+
+| File | What it supports |
+|---|---|
+| `evidence/webdriver-ui-test-output.png` | WebDriver endpoint/session access, JavaScript-driven DOM changes |
+| `evidence/physical-tv-ui-overlay.png` | Actual rendered UI overlay on physical TV |
+| `evidence/acr-write-baseline.png` | Baseline ACR-related storage values and write/readback |
+| `evidence/acr-write-restore.png` | ACR-related storage state and restoration |
+| `evidence/acr-status-output.png` | ACR-related keys and researcher interpretation; not proof of network telemetry |
+| `evidence/content-surveillance-dashboard.png` | Observed application/input and volume state |
+| `evidence/content-surveillance-monitor.png` | Repeated observations of route/app changes and volume |
+| `evidence/webdriver-test-console.png` | Supplementary console output from testing |
+| `evidence/dns-traffic-capture.png` | DNS activity; does not prove ACR data content or exfiltration |
+
+## Reproduction summary (non-weaponized)
+
+On the tested firmware, a LAN-adjacent researcher established that the exposed WebDriver service was reachable without credentials, obtained access to a browser session, and verified JavaScript execution with benign DOM modifications. The researcher then demonstrated browser-storage read/write and monitored changes in TV UI state. Detailed reproduction scripts and sensitive output are retained separately for coordinated private validation.
+
+## Remediation recommendations
+
+- Remove or disable remote browser automation/debug services in production firmware unless explicitly required.
+- If diagnostic access is necessary, bind it to a restricted management interface and enforce strong authentication, authorization, and user-approved pairing.
+- Ensure JavaScript executing through diagnostic contexts cannot access sensitive TV UI state or native bridges beyond strictly necessary privileges.
+- Audit the shipping firmware and build pipeline for QA/debug functionality and verify fixes across affected hardware/firmware variants.
+
+## Disclosure and references
+
+- **CVE ID:** `CVE-2026-XXXXX` — pending replacement with VulnCheck-assigned identifier.
+- **Conference research:** *Pwned on the Couch: Hacking Smart TVs into Surveillance Devices* — Black Hat MEA 2026.
+- **Researcher:** Yehia Elghaly.
+
+> **Publication note:** Keep this repository private until the agreed disclosure date. This advisory is intended as the eventual public reference; full reproduction scripts, raw dumps, credentials, and receiver-side unredacted logs belong in a separate private evidence repository.
