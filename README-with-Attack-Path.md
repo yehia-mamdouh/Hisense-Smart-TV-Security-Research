@@ -3,7 +3,7 @@
 **Security advisory | Yehia Elghaly | Coordinated disclosure**
 
 > [!IMPORTANT]
-> **CVE ID pending.** This document describes a vulnerability verified on one Hisense 55A57EXVT running firmware `V0000.01.00a.P0220`. Keep private until coordinated publication.
+> **CVE ID pending.** This document describes a vulnerability verified on one Hisense 55A57EXVT running firmware `V0000.01.00a.P0220`.
 
 | Affected device | Exposed interface | Access required |
 |---|---|---|
@@ -25,9 +25,10 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 
 **Observed result:** WebDriver session access and JavaScript execution were confirmed. The researcher subsequently retrieved internal `localStorage` data and demonstrated its outbound transmission to a controlled HTTP receiver. This is **browser-context JavaScript execution**, not a demonstrated operating-system shell or unrestricted native code execution.
 
-![WebDriver session and JavaScript execution evidence](evidence/webdriver-test-console.png)
+<img width="1302" height="915" alt="1" src="https://github.com/user-attachments/assets/204dac6a-5671-4d2f-b040-81ab701f410f" />
+<img width="1280" height="884" alt="2" src="https://github.com/user-attachments/assets/ab09830a-07fa-4dc4-8853-6f99095a1b70" />
 
-*Figure 1 — Unauthenticated WebDriver access and JavaScript execution in the television's UI context.*
+*Figure 1 & 2 — Unauthenticated WebDriver access and JavaScript execution in the television's UI context.*
 
 ### 02 — TV Interface Hijacking and Deceptive Full-Screen Overlays
 
@@ -35,9 +36,9 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 
 **Observed result:** The researcher injected a full-screen warning into the running UI, and the physical television displayed it. This demonstrates direct unauthorized control over content shown to the viewer.
 
-![Researcher-controlled warning displayed on physical TV](evidence/physical-tv-ui-overlay.png)
+<img width="1396" height="1127" alt="afc45393-fce8-45be-8ac4-4f5afa7c1f69" src="https://github.com/user-attachments/assets/995c119c-b426-42b5-8156-2add3434fcb9" />
 
-*Figure 2 — Full-screen warning injected by the researcher, not a genuine Hisense security notice.*
+*Figure 3 — Full-screen warning injected by the researcher, not a genuine Hisense security notice.*
 
 ### 03 — Unauthorized Modification of ACR and Advertising-Related Settings
 
@@ -47,9 +48,11 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 
 **Evidence boundary:** Changing a `localStorage` flag does not by itself prove that ACR telemetry stopped or started, that a consent notice was bypassed, or that the change survived a restart.
 
-![ACR setting write and readback](evidence/acr-write-baseline.png)
+<img width="1280" height="651" alt="aaaa" src="https://github.com/user-attachments/assets/f20fa3e8-4f58-4b2d-9c40-1db4d47fda55" />
+<img width="1276" height="690" alt="aaaaa" src="https://github.com/user-attachments/assets/5b160764-4cf6-4903-8428-0e0ca0c259ae" />
+<img width="1280" height="453" alt="write-acr1" src="https://github.com/user-attachments/assets/b4925403-53fd-4955-aba5-71a0d5a6ea71" />
 
-*Figure 3 — Unauthorized modification and verification of an ACR-related browser-storage value.*
+*Figure 4 5 & 6 — Unauthorized modification and verification of an ACR-related browser-storage value.*
 
 ### 04 — Viewing-Activity and Device-State Monitoring
 
@@ -59,9 +62,10 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 
 **Evidence boundary:** App names and routes do not establish the exact movie, episode, broadcast program, or complete viewing history.
 
-![Observed app and input changes](evidence/content-surveillance-monitor.png)
+<img width="1710" height="965" alt="bes" src="https://github.com/user-attachments/assets/5dbd74ed-ab59-4d07-a391-24f7aa8c7f87" />
+<img width="1742" height="647" alt="Screenshot from 2026-04-30 01-43-20" src="https://github.com/user-attachments/assets/f3540417-9a86-46a1-913d-c26bafed5a28" />
 
-*Figure 4 — Repeated observations of app/UI transitions and device-state changes.*
+*Figure 7 & 8 — Repeated observations of app/UI transitions and device-state changes.*
 
 ### 05 — Sensitive Application Data Extraction and Confirmed External Exfiltration
 
@@ -71,17 +75,10 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 
 **Attack sequence:** **LAN access → unauthenticated WebDriver session → browser-context JavaScript → application data collection → external HTTP POST.**
 
-![Extracted application storage](evidence/storage-extraction-43-keys.png)
+<img width="1894" height="986" alt="Screenshot from 2026-10-11 18-08-07" src="https://github.com/user-attachments/assets/572d23a9-8a0a-4aa8-aa69-e3def6c9e6b4" />
+<img width="1900" height="934" alt="Screenshot from 2026-10-11 18-08-18" src="https://github.com/user-attachments/assets/132250ad-d409-4e75-895e-7367b8e78e67" />
 
-*Figure 5 — Browser-accessible application storage retrieved through WebDriver.*
-
-![External receiver and device payload](evidence/external-post-device-payload.png)
-
-*Figure 6 — Researcher-controlled receiver showing an HTTP POST with TV device metadata.*
-
-![External receiver and storage payload](evidence/external-post-storage-payload.png)
-
-*Figure 7 — Received JSON containing extracted application storage values.*
+*Figure 9 — Received JSON containing extracted application storage values.*
 
 **Evidence boundary:** Advertising-service signature fields are not independently verified as reusable authentication credentials. No claim is made here of Wi-Fi password theft, unrestricted filesystem access, or OS-level command execution.
 
@@ -132,9 +129,5 @@ flowchart TD
 ## Disclosure
 
 **Researcher:** Yehia Elghaly  
-**CVE:** `CVE-2026-XXXXX` (awaiting assignment)  
-**Status:** Coordinated disclosure with VulnCheck and the vendor  
+**CVE:** `CVE-2026-XXXXX` 
 **Research presentation:** *Pwned on the Couch: Hacking Smart TVs into Surveillance Devices* — Black Hat MEA 2026
-
-> [!CAUTION]
-> Redact MAC addresses, receiver URLs, signature values, and identifiable device/user information before public release. Keep full exploit scripts and raw sensitive evidence outside the eventual public repository.
