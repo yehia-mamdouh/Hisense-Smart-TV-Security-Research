@@ -1,9 +1,9 @@
-# CVE-2026-XXXXX — Unauthorized Content Injection via DLNA AVTransport on Hisense VIDAA Smart TV
+# CVE-2026-XXXXX - Unauthorized Content Injection via DLNA AVTransport on Hisense VIDAA Smart TV
 
 **Security Research Advisory** · **Yehia Elghaly** · **Coordinated Disclosure**
 
 > [!IMPORTANT]
-> **Draft — CVE identifier pending.** Findings apply to the tested device and firmware. Coordinate publication with VulnCheck and the vendor.
+> **Draft - CVE identifier pending.** Findings apply to the tested device and firmware. Coordinate publication with VulnCheck and the vendor.
 
 | Field | Tested configuration |
 |---|---|
@@ -26,31 +26,31 @@ The AVTransport SOAP service processes client-supplied media URIs without suffic
 
 ## Demonstrated Security Impacts
 
-### 01 — Remote Injection of Attacker-Controlled Content onto the TV Screen
+### 01 - Remote Injection of Attacker-Controlled Content onto the TV Screen
 
 A network-adjacent client can direct the television to retrieve a media resource from an attacker-controlled HTTP server and, following the initial DLNA approval, render supported content on the physical screen. The accompanying physical-device evidence shows a researcher-generated content-injection display and a media playback screen.
 
 **Attacker impact:** An unauthorized network client could replace or interrupt what the viewer is watching with arbitrary *supported media*, including deceptive notices or impersonated security messages embedded as images or video. This enables on-screen social engineering and interference with normal television use.
 
-![Researcher-controlled content displayed on the physical TV](evidence/injected-content-on-tv.png)
+<img width="1419" height="1109" alt="71a1d1b8-11cb-4744-9056-f772c38c8e81" src="https://github.com/user-attachments/assets/5dbd56f1-2d14-465b-99f6-0171488af48f" />
 
-*Figure 1 — Physical television displaying researcher-generated content-injection proof of concept.*
+*Figure 1 - Physical television displaying researcher-generated content-injection proof of concept.*
 
-![Researcher-controlled video playback on the physical TV](evidence/video-on-tv.png)
+<img width="1472" height="1069" alt="abc14a47-549f-4bce-878d-8f9f1ce6b54c" src="https://github.com/user-attachments/assets/5937fa3f-89c9-4edd-a685-86df2f156a6c" />
 
-*Figure 2 — Physical television displaying test video content via the media playback interface.*
+*Figure 2 - Physical television displaying test video content via the media playback interface.*
 
-### 02 — Untrusted Media Fetching and Playback Control
+### 02 - Untrusted Media Fetching and Playback Control
 
 The test console records successful `SetAVTransportURI`, `Play`, and `Stop` operations (HTTP 200) and confirms that the television fetched resources from the researcher's HTTP server. The log records requests for an H.264 MP4, a JPEG image, and an HTML document.
 
 **Attacker impact:** A network client able to invoke the AVTransport commands can make the television request externally hosted content and initiate or stop playback. This could disrupt active viewing or expose the TV to attacker-selected media resources.
 
-![AVTransport commands and HTTP fetches recorded during testing](evidence/avtransport-console.png)
+<img width="1280" height="851" alt="Screenshot from 2026-10-09 19-19-41" src="https://github.com/user-attachments/assets/39f9cbbc-4a0b-41df-bc61-df914549b878" />
 
-*Figure 3 — SOAP command results and server-side fetch logs for video, image, and HTML test resources.*
 
-**Important distinction:** An HTTP 200 response to a SOAP command or a successful HTTP fetch does **not** prove that the media was decoded or displayed. The test script reports that H.264 MP4 and HTML were fetched but not rendered as playable content in that run. The physical-device photographs separately demonstrate supported content appearing on-screen. The evidence does not establish arbitrary HTML/JavaScript execution, filesystem disclosure, or playback without initial DLNA consent.
+*Figure 3 - SOAP command results and server-side fetch logs for video, image, and HTML test resources.*
+
 
 ### 03 — Persistent Control After Initial DLNA Approval
 
@@ -88,6 +88,3 @@ flowchart TD
 
 **Researcher:** Yehia Elghaly  
 **CVE:** `CVE-2026-XXXXX` — awaiting assignment  
-**Status:** Coordinated disclosure with VulnCheck and the vendor; dates to be confirmed.
-
-> The screenshots show controlled proof-of-concept content. They do not establish that the vendor issued the displayed messages.
