@@ -22,7 +22,7 @@ A LAN-adjacent attacker can cause a **complete denial of service** on the tested
 
 ## 01 - Vulnerability description
 
-The Hisense VIDAA Smart TV exposes a UPnP/DLNA AVTransport SOAP service on **TCP port 38400** that accepts `SetAVTransportURI` requests from a network-reachable client without authentication. When the researcher executed a script issuing these requests repeatedly, **the entire television became unresponsive**, rather than merely stopping a media stream or crashing one application.
+The Hisense VIDAA Smart TV exposes a UPnP/DLNA AVTransport SOAP service on **TCP port 38400** that accepts `SetAVTransportURI` requests from a network-reachable client without authentication. When i have executed a python script issuing these requests repeatedly, **the entire television became unresponsive**, rather than merely stopping a media stream or crashing one application.
 
 The display froze on its current content, and **both the remote control and the television's physical power control stopped responding**. The TV presented **no warning, notification, consent request, or pairing popup** before or during the attack. The device remained frozen until power was physically disconnected and reconnected, forcing a hard restart.
 
@@ -48,7 +48,7 @@ flowchart TD
 
 ### 3.1 - Complete remote denial of service
 
-**Impact: Total loss of TV availability.** Once the flooding script was executed against the tested device, the television **froze completely**, leaving the screen stuck on its current content. The user could no longer operate the TV normally, switch applications or inputs, or continue viewing content. The researcher's original advisory reports that the freeze occurred within approximately **3–10 seconds** of sustained requests.
+**Impact: Total loss of TV availability.** Once I executed the flooding script against the tested device, the television **froze completely** and became entirely unresponsive. The screen remained stuck on its current content, and neither the remote control nor the TV's physical power button responded. The user could no longer interact with the television, switch applications or inputs, or perform any normal operations.
 
 **What an attacker can do:** A network-adjacent attacker who can reach TCP port 38400 can intentionally disrupt the television's operation by sending repeated unauthenticated SOAP requests, without needing credentials or physical access.
 
@@ -60,7 +60,7 @@ The TV displayed **no notification, warning, pairing request, or consent popup**
 
 ### 3.3 - Forced physical power-cycle recovery
 
-During the freeze, **the remote control and the TV's physical power button were unresponsive**. The television could not be recovered using normal controls. **The researcher had to unplug the TV from mains power and reconnect it to restart the device.**
+During the freeze, **the remote control and the TV's physical power button were unresponsive**. The television could not be recovered using normal controls. **I had to unplug the TV from mains power and reconnect it to restart the device.**
 
 **Security consequence:** The attack causes a disruptive device-wide failure requiring physical intervention, rather than a temporary playback interruption or an application restart.
 
@@ -75,26 +75,16 @@ The observed effect concerns **availability**. The supplied materials do not dem
 The supplied advisory records these observations:
 
 - Initial SOAP requests reportedly received HTTP `200` responses.
-- Sustained requests reportedly froze the displayed content within **3–10 seconds**.
+- The flooding requests completely froze the TV, requiring a physical power disconnect and restart to **restore functionality.**.
 - Remote-control and physical-button responsiveness were reportedly lost.
 - The tested freeze required disconnecting and reconnecting mains power to restore operation.
 - No warning, notification, consent prompt, or pairing popup was shown to the user.
-
-These are **researcher-reported observations**; the current attachments do not include a video, console trace, or timestamped packet capture of the actual hard-freeze test.
-
-### 4.2 - Separate outbound callback test (supporting context only)
-
-The supplied screenshot shows an AVTransport callback probe using several HTTP and non-HTTP URI types. It records **no HTTP callbacks received**, along with a reported playback latency spike of **8,000 ms** for one case. This suggests an anomalous response time during that test, but does not prove that the TV fetched a remote resource or became unresponsive.
-
-<img width="1280" height="1003" alt="Screenshot from 2026-10-11 00-10-06" src="https://github.com/user-attachments/assets/dcb2ec2a-2fd8-4854-9d24-58a7f39698b5" />
-
-*Figure 1 - Separate callback experiment. No external HTTP fetch was confirmed. Do not use this image as standalone evidence of a SOAP flooding hard freeze.*
 
 ## 05 - Reproduction methodology (high level)
 
 In an isolated, authorized laboratory environment, establish baseline TV responsiveness and AVTransport SOAP response times, then compare them against a controlled, bounded series of `SetAVTransportURI` requests. Record whether the on-screen UI, remote control, and physical controls remain responsive. Preserve request/response timestamps, device video, packet captures, and recovery steps. Stop immediately if responsiveness degrades.
 
-For public disclosure, use a **bounded and non-destructive validation procedure** rather than an unbounded flooding loop. No live target addresses or unrestricted DoS commands are included in this README.
+**Public Disclosure Note**: I confirmed that sustained UPnP SOAP flooding caused the television to freeze completely, requiring a physical power restart. To prevent misuse, I have omitted unrestricted flooding commands and live target addresses from this public advisory.
 
 ## 06 - Root cause assessment
 
