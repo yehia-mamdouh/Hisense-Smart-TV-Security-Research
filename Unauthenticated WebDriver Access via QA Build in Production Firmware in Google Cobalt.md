@@ -1,4 +1,4 @@
-# CVE-2026-XXXXX — Unauthenticated Cobalt WebDriver Access on Hisense VIDAA Smart TV
+# CVE-2026-XXXXX - Unauthenticated Cobalt WebDriver Access on Hisense VIDAA Smart TV
 
 **Security advisory | Yehia Elghaly | Coordinated disclosure**
 
@@ -19,7 +19,7 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 
 ## Demonstrated Security Impacts
 
-### 01 — Unauthenticated Remote JavaScript Execution Leading to Sensitive Data Disclosure and External Exfiltration
+### 01 - Unauthenticated Remote JavaScript Execution Leading to Sensitive Data Disclosure and External Exfiltration
 
 **Attacker capability:** Any party able to reach the exposed WebDriver service can execute JavaScript inside the TV's active browser/UI session **without credentials, pairing, or approval from the TV owner**. Unlike harmless automation, this grants the remote party access to the application data and functions available to that browser context.
 
@@ -28,9 +28,9 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 <img width="1302" height="915" alt="1" src="https://github.com/user-attachments/assets/204dac6a-5671-4d2f-b040-81ab701f410f" />
 <img width="1280" height="884" alt="2" src="https://github.com/user-attachments/assets/ab09830a-07fa-4dc4-8853-6f99095a1b70" />
 
-*Figure 1 & 2 — Unauthenticated WebDriver access and JavaScript execution in the television's UI context.*
+*Figure 1 & 2 - Unauthenticated WebDriver access and JavaScript execution in the television's UI context.*
 
-### 02 — TV Interface Hijacking and Deceptive Full-Screen Overlays
+### 02 - TV Interface Hijacking and Deceptive Full-Screen Overlays
 
 **Attacker capability:** A network-adjacent attacker can replace or obscure the visible TV interface with attacker-controlled text and full-screen content. This could be used to **display fake security alerts, impersonate vendor warnings, mislead the viewer into following instructions, or disrupt normal TV use**. A deceptive overlay could facilitate social engineering; actual credential theft was not demonstrated.
 
@@ -38,9 +38,9 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 
 <img width="1396" height="1127" alt="afc45393-fce8-45be-8ac4-4f5afa7c1f69" src="https://github.com/user-attachments/assets/995c119c-b426-42b5-8156-2add3434fcb9" />
 
-*Figure 3 — Full-screen warning injected by the researcher, not a genuine Hisense security notice.*
+*Figure 3 - Full-screen warning injected by the researcher, not a genuine Hisense security notice.*
 
-### 03 — Unauthorized Modification of ACR and Advertising-Related Settings
+### 03 - Unauthorized Modification of ACR and Advertising-Related Settings
 
 **Attacker capability:** An attacker can **read and modify browser-stored privacy and advertising preferences** without the owner's consent. This creates an integrity risk: settings displayed or relied upon by the TV application may be tampered with, potentially misleading users about their privacy choices or altering application behavior where those settings are consumed.
 
@@ -52,9 +52,9 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 <img width="1276" height="690" alt="aaaaa" src="https://github.com/user-attachments/assets/5b160764-4cf6-4903-8428-0e0ca0c259ae" />
 <img width="1280" height="453" alt="write-acr1" src="https://github.com/user-attachments/assets/b4925403-53fd-4955-aba5-71a0d5a6ea71" />
 
-*Figure 4 5 & 6 — Unauthorized modification and verification of an ACR-related browser-storage value.*
+*Figure 4 5 & 6 - Unauthorized modification and verification of an ACR-related browser-storage value.*
 
-### 04 — Viewing-Activity and Device-State Monitoring
+### 04 - Viewing-Activity and Device-State Monitoring
 
 **Attacker capability:** A remote attacker can observe browser-accessible app and input state, potentially **tracking when a household switches between streaming apps, Live TV, and HDMI inputs**, as well as changes in volume and UI navigation. Repeated polling can reveal usage patterns and periods of activity without accessing the television physically.
 
@@ -65,9 +65,9 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 <img width="1710" height="965" alt="bes" src="https://github.com/user-attachments/assets/5dbd74ed-ab59-4d07-a391-24f7aa8c7f87" />
 <img width="1742" height="647" alt="Screenshot from 2026-04-30 01-43-20" src="https://github.com/user-attachments/assets/f3540417-9a86-46a1-913d-c26bafed5a28" />
 
-*Figure 7 & 8 — Repeated observations of app/UI transitions and device-state changes.*
+*Figure 7 & 8 - Repeated observations of app/UI transitions and device-state changes.*
 
-### 05 — Sensitive Application Data Extraction and Confirmed External Exfiltration
+### 05 - Sensitive Application Data Extraction and Confirmed External Exfiltration
 
 **Attacker capability:** The unauthenticated JavaScript execution can be used to **collect internal TV configuration and identifiers and send them beyond the local network**. This changes the exposure from passive access to an actionable confidentiality compromise.
 
@@ -78,7 +78,7 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 <img width="1894" height="986" alt="Screenshot from 2026-10-11 18-08-07" src="https://github.com/user-attachments/assets/572d23a9-8a0a-4aa8-aa69-e3def6c9e6b4" />
 <img width="1900" height="934" alt="Screenshot from 2026-10-11 18-08-18" src="https://github.com/user-attachments/assets/132250ad-d409-4e75-895e-7367b8e78e67" />
 
-*Figure 9 — Received JSON containing extracted application storage values.*
+*Figure 9 - Received JSON containing extracted application storage values.*
 
 **Evidence boundary:** Advertising-service signature fields are not independently verified as reusable authentication credentials. No claim is made here of Wi-Fi password theft, unrestricted filesystem access, or OS-level command execution.
 
@@ -130,4 +130,4 @@ flowchart TD
 
 **Researcher:** Yehia Elghaly  
 **CVE:** `CVE-2026-XXXXX` 
-**Research presentation:** *Pwned on the Couch: Hacking Smart TVs into Surveillance Devices* — Black Hat MEA 2026
+**Research presentation:** *Pwned on the Couch: Hacking Smart TVs into Surveillance Devices* - Black Hat MEA 2026
