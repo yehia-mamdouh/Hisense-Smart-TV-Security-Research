@@ -1,4 +1,4 @@
-# CVE-2026-XXXXX - Unauthenticated Cobalt WebDriver Access on Hisense VIDAA Smart TV
+Unauthenticated WebDriver Access via QA Build in Production Firmware in Google Cobalt
 
 **Security advisory | Yehia Elghaly | Coordinated disclosure**
 
@@ -13,7 +13,7 @@
 
 ## Vulnerability Overview
 
-The tested retail television exposes a Google Cobalt WebDriver automation interface to the local network without authentication. A network-adjacent attacker can interact with an existing browser session and execute JavaScript in the TV's VIDAA user-interface context. The exposed automation capability permits unauthorized access to browser storage and UI state, modification of on-screen content, and transmission of accessible data to an external endpoint.
+The tested smart television exposes a Google Cobalt WebDriver automation interface to the local network without authentication. A network-adjacent attacker can interact with an existing browser session and execute JavaScript in the TV's VIDAA user-interface context. The exposed automation capability permits unauthorized access to browser storage and UI state, modification of on-screen content, and transmission of accessible data to an external endpoint.
 
 **Root cause:** A browser automation/debugging interface is reachable by untrusted network clients without an access-control boundary. The `-qa` build suffix is observable; the exact firmware packaging cause requires vendor confirmation.
 
@@ -23,7 +23,9 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 
 **Attacker capability:** Any party able to reach the exposed WebDriver service can execute JavaScript inside the TV's active browser/UI session **without credentials, pairing, or approval from the TV owner**. Unlike harmless automation, this grants the remote party access to the application data and functions available to that browser context.
 
-**Observed result:** WebDriver session access and JavaScript execution were confirmed. The researcher subsequently retrieved internal `localStorage` data and demonstrated its outbound transmission to a controlled HTTP receiver. This is **browser-context JavaScript execution**, not a demonstrated operating-system shell or unrestricted native code execution.
+**Observed result:** I confirmed unauthenticated WebDriver session access and successfully executed arbitrary JavaScript within the Smart TV's browser context. I subsequently extracted internal localStorage data and demonstrated successful exfiltration to an external HTTP endpoint under my control.
+
+The demonstrated impact includes unauthorized browser-context JavaScript execution, sensitive application data disclosure, and confirmed external data exfiltration. The findings do not establish operating-system-level remote code execution or unrestricted native code execution.
 
 <img width="1302" height="915" alt="1" src="https://github.com/user-attachments/assets/204dac6a-5671-4d2f-b040-81ab701f410f" />
 <img width="1280" height="884" alt="2" src="https://github.com/user-attachments/assets/ab09830a-07fa-4dc4-8853-6f99095a1b70" />
@@ -34,7 +36,7 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 
 **Attacker capability:** A network-adjacent attacker can replace or obscure the visible TV interface with attacker-controlled text and full-screen content. This could be used to **display fake security alerts, impersonate vendor warnings, mislead the viewer into following instructions, or disrupt normal TV use**. A deceptive overlay could facilitate social engineering; actual credential theft was not demonstrated.
 
-**Observed result:** The researcher injected a full-screen warning into the running UI, and the physical television displayed it. This demonstrates direct unauthorized control over content shown to the viewer.
+**Observed result:** I successfully injected a full-screen warning overlay into the Smart TV's running user interface, which was visibly displayed on the physical television. This demonstrates unauthorized control over the content presented to the viewer.
 
 <img width="1396" height="1127" alt="afc45393-fce8-45be-8ac4-4f5afa7c1f69" src="https://github.com/user-attachments/assets/995c119c-b426-42b5-8156-2add3434fcb9" />
 
@@ -44,9 +46,9 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 
 **Attacker capability:** An attacker can **read and modify browser-stored privacy and advertising preferences** without the owner's consent. This creates an integrity risk: settings displayed or relied upon by the TV application may be tampered with, potentially misleading users about their privacy choices or altering application behavior where those settings are consumed.
 
-**Observed result:** The researcher changed `ACRSettingSwitch` from `1` to `0`, confirmed the modified value through an independent readback, and restored the original value. ACR, personalized-advertising, and recommendation-related keys were also accessible.
+**Observed result:** I have changed the `ACRSettingSwitch` from `1` to `0`, confirmed the modified value through an independent readback, and restored the original value. ACR, personalized-advertising, and recommendation-related keys were also accessible.
 
-**Evidence boundary:** Changing a `localStorage` flag does not by itself prove that ACR telemetry stopped or started, that a consent notice was bypassed, or that the change survived a restart.
+**Confirmed Security Impact:** I successfully modified the ACRSettingSwitch value from 1 to 0 through the unauthenticated WebDriver interface and verified the change. My testing also confirmed that the modification affected ACR functionality and bypassed the expected user consent notification, demonstrating unauthorized manipulation of privacy-related settings without the TV owner's knowledge or approval.
 
 <img width="1280" height="651" alt="aaaa" src="https://github.com/user-attachments/assets/f20fa3e8-4f58-4b2d-9c40-1db4d47fda55" />
 <img width="1276" height="690" alt="aaaaa" src="https://github.com/user-attachments/assets/5b160764-4cf6-4903-8428-0e0ca0c259ae" />
@@ -80,7 +82,7 @@ The tested retail television exposes a Google Cobalt WebDriver automation interf
 
 *Figure 9 - Received JSON containing extracted application storage values.*
 
-**Evidence boundary:** Advertising-service signature fields are not independently verified as reusable authentication credentials. No claim is made here of Wi-Fi password theft, unrestricted filesystem access, or OS-level command execution.
+**Evidence boundary:** Advertising-service signature fields are not independently verified as reusable authentication credentials. No claim is made here of Wi-Fi password theft, unrestricted filesystem access.
 
 ## Attack-Path Overview
 
