@@ -1,4 +1,4 @@
-# Hisense VIDAA Smart TV — UPnP AVTransport SOAP Flooding Denial of Service
+# Hisense VIDAA Smart TV - UPnP AVTransport SOAP Flooding Denial of Service
 
 > **Security research advisory | Availability impact | LAN-adjacent attack surface**
 
@@ -19,9 +19,8 @@ A LAN-adjacent attacker can cause a **complete denial of service** on the tested
 | Network port | TCP 38400 |
 | Relevant SOAP action | `urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI` |
 | Attack position | A host able to reach the television's LAN-facing service |
-| CVE identifier | Not provided; do not assign one without confirmation |
 
-## 01 — Vulnerability description
+## 01 - Vulnerability description
 
 The Hisense VIDAA Smart TV exposes a UPnP/DLNA AVTransport SOAP service on **TCP port 38400** that accepts `SetAVTransportURI` requests from a network-reachable client without authentication. When the researcher executed a script issuing these requests repeatedly, **the entire television became unresponsive**, rather than merely stopping a media stream or crashing one application.
 
@@ -29,7 +28,7 @@ The display froze on its current content, and **both the remote control and the 
 
 The observed failure is a **device-wide availability loss triggered remotely over the local network**. Insufficient request throttling or isolation of AVTransport processing is a plausible cause, but the precise internal failure mechanism has not been verified through firmware traces.
 
-## 02 — Attack-path diagram
+## 02 - Attack-path diagram
 
 ```mermaid
 flowchart TD
@@ -45,33 +44,33 @@ flowchart TD
 
 *The diagram illustrates the reported attack path, not a verified internal implementation trace.*
 
-## 03 — Security impact
+## 03 - Security impact
 
-### 3.1 — Complete remote denial of service
+### 3.1 - Complete remote denial of service
 
 **Impact: Total loss of TV availability.** Once the flooding script was executed against the tested device, the television **froze completely**, leaving the screen stuck on its current content. The user could no longer operate the TV normally, switch applications or inputs, or continue viewing content. The researcher's original advisory reports that the freeze occurred within approximately **3–10 seconds** of sustained requests.
 
 **What an attacker can do:** A network-adjacent attacker who can reach TCP port 38400 can intentionally disrupt the television's operation by sending repeated unauthenticated SOAP requests, without needing credentials or physical access.
 
-### 3.2 — No user notification or consent prompt
+### 3.2 - No user notification or consent prompt
 
 The TV displayed **no notification, warning, pairing request, or consent popup** when the attack began. The user therefore received no on-screen opportunity to approve, reject, or interrupt the incoming commands before the device froze.
 
 **Security consequence:** The attack can begin silently from the local network and cause a sudden loss of availability without an on-screen indication of the cause.
 
-### 3.3 — Forced physical power-cycle recovery
+### 3.3 - Forced physical power-cycle recovery
 
 During the freeze, **the remote control and the TV's physical power button were unresponsive**. The television could not be recovered using normal controls. **The researcher had to unplug the TV from mains power and reconnect it to restart the device.**
 
 **Security consequence:** The attack causes a disruptive device-wide failure requiring physical intervention, rather than a temporary playback interruption or an application restart.
 
-### 3.4 — Scope and limitations
+### 3.4 - Scope and limitations
 
 The observed effect concerns **availability**. The supplied materials do not demonstrate data theft, operating-system command execution, or persistence. Testing on other Hisense models or firmware versions has not been established. The separate callback screenshot does not itself demonstrate the hard-freeze behavior.
 
-## 04 — Research evidence
+## 04 - Research evidence
 
-### 4.1 — Original flooding-test observations (researcher advisory)
+### 4.1 - Original flooding-test observations (researcher advisory)
 
 The supplied advisory records these observations:
 
@@ -83,27 +82,27 @@ The supplied advisory records these observations:
 
 These are **researcher-reported observations**; the current attachments do not include a video, console trace, or timestamped packet capture of the actual hard-freeze test.
 
-### 4.2 — Separate outbound callback test (supporting context only)
+### 4.2 - Separate outbound callback test (supporting context only)
 
 The supplied screenshot shows an AVTransport callback probe using several HTTP and non-HTTP URI types. It records **no HTTP callbacks received**, along with a reported playback latency spike of **8,000 ms** for one case. This suggests an anomalous response time during that test, but does not prove that the TV fetched a remote resource or became unresponsive.
 
-![AVTransport callback test console — no HTTP callbacks observed](evidence/callback-test-console.png)
+<img width="1280" height="1003" alt="Screenshot from 2026-10-11 00-10-06" src="https://github.com/user-attachments/assets/dcb2ec2a-2fd8-4854-9d24-58a7f39698b5" />
 
-*Figure 1 — Separate callback experiment. No external HTTP fetch was confirmed. Do not use this image as standalone evidence of a SOAP flooding hard freeze.*
+*Figure 1 - Separate callback experiment. No external HTTP fetch was confirmed. Do not use this image as standalone evidence of a SOAP flooding hard freeze.*
 
-## 05 — Reproduction methodology (high level)
+## 05 - Reproduction methodology (high level)
 
 In an isolated, authorized laboratory environment, establish baseline TV responsiveness and AVTransport SOAP response times, then compare them against a controlled, bounded series of `SetAVTransportURI` requests. Record whether the on-screen UI, remote control, and physical controls remain responsive. Preserve request/response timestamps, device video, packet captures, and recovery steps. Stop immediately if responsiveness degrades.
 
 For public disclosure, use a **bounded and non-destructive validation procedure** rather than an unbounded flooding loop. No live target addresses or unrestricted DoS commands are included in this README.
 
-## 06 — Root cause assessment
+## 06 - Root cause assessment
 
 **Hypothesis:** Inadequate request-rate controls and/or failure to isolate AVTransport processing from UI-critical resources may permit repeated commands to exhaust or block shared execution capacity.
 
 **Confidence:** The original advisory attributes the issue to missing throttling and an overloaded request queue. The provided materials do not contain instrumentation proving that particular implementation mechanism. Vendor investigation is required to confirm the root cause.
 
-## 07 — Recommended remediation
+## 07 - Recommended remediation
 
 1. Require appropriate authorization or pairing for state-changing AVTransport commands.
 2. Apply per-client and global request-rate limits, queue bounds, and backpressure.
@@ -114,7 +113,7 @@ For public disclosure, use a **bounded and non-destructive validation procedure*
 
 **Temporary mitigation:** Isolate the TV from untrusted LAN clients and filter access to TCP 38400 where network controls permit, while preserving required legitimate features.
 
-## 08 — Disclosure and validation status
+## 08 - Disclosure and validation status
 
 | Item | Status |
 |---|---|
