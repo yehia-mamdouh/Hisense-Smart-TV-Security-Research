@@ -116,11 +116,11 @@ Each individual finding is documented separately to preserve its specific attack
 |:--|:--|
 | **27 April 2026** | Initial vulnerability report sent to **Hisense**. |
 | **2 May 2026** | Follow-up reminder sent to the vendor. |
-| **25 October 2026** | **No vendor response received**, according to the researcher's disclosure record. |
+| **25 October 2026** | **No vendor response received** . |
 
-**Vendor status:** Awaiting acknowledgement or response as of **25 October 2026**.
+**Vendor status:** Awaited acknowledgement or response till date **25 October 2026** but no response.
 
-This timeline records communications reported by the researcher; it does not imply that Hisense has confirmed the findings, accepted the reported severity, or issued a fix. Any subsequent vendor response or remediation information will be reflected in the corresponding advisories.
+This timeline records communications reported by the me; it does not imply that Hisense has confirmed the findings, accepted the reported severity, or issued a fix. Any subsequent vendor response or remediation information will be reflected in the corresponding advisories.
 
 ## 🛡️ Security Recommendations
 
