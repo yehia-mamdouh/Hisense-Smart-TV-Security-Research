@@ -1,6 +1,5 @@
 # Hisense VIDAA Smart TV - Unauthorized UPnP Control and Consent-Popup Enforcement Weakness
 
-**CVE:** Pending assignment  
 **Vendor:** Hisense  
 **Affected device tested:** Hisense 55A57EXVT  
 **Firmware tested:** `V0000.01.00a.P0220`  
