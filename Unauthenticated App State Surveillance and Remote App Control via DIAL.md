@@ -1,11 +1,11 @@
-# CVE-2026-XXXXX  Unauthenticated App State Surveillance and Remote App Control via DIAL
+# Unauthenticated App State Surveillance and Remote App Control via DIAL
 
 ### Hisense VIDAA Smart TV · Security Advisory
 
 **Researcher:** Yehia Elghaly · **Status:** Coordinated disclosure - CVE identifier pending
 
 > [!IMPORTANT]
-> **Draft / Private.** Replace `CVE-2026-XXXXX` with the assigned identifier before publication. Findings are based on the tested device and firmware; other models and versions have not been verified.
+> **CVE ID pending.** This document describes a vulnerability verified on one Hisense 55A57EXVT running firmware V0000.01.00a.P0220.
 
 | Field | Tested configuration |
 |---|---|
@@ -21,13 +21,13 @@
 
 The tested Hisense VIDAA Smart TV exposes a DIAL application-control service on TCP port **56789** that responds to application status and control requests without authentication or user-approved pairing. A network-adjacent attacker who can reach this port can determine the state of supported applications, terminate running applications, and launch installed applications without the television owner's authorization.
 
-The research also demonstrated that an application-launch request for YouTube could be accepted when the HTTP client supplied `Origin: https://www.youtube.com`. Because a non-browser client can set this header, the observed check did not provide reliable authentication for the tested request.
+I have also demonstrated that an application-launch request for YouTube could be accepted when the HTTP client supplied `Origin: https://www.youtube.com`. Because a non-browser client can set this header, the observed check did not provide reliable authentication for the tested request.
 
 **Security consequence:** Unauthorized disclosure of application usage state and unauthorized control of the television's streaming applications, including interruption of active sessions.
 
 ## Demonstrated Security Impacts
 
-### 01 — Unauthenticated Application-State Surveillance
+### 01 - Unauthenticated Application-State Surveillance
 
 An unauthenticated network client can query the DIAL service for application state. The tested console retrieved the status of **Netflix**, **YouTube**, and **AmazonInstantVideo** without credentials. The responses exposed states such as `running` and `stopped`, as well as the `allowStop` property when available.
 
@@ -37,11 +37,11 @@ An unauthenticated network client can query the DIAL service for application sta
 
 <img width="1329" height="410" alt="2" src="https://github.com/user-attachments/assets/2ed6bbdd-5de0-479e-a5d8-c686ee88ea30" />
 
-*Figure 1 — DIAL status queries exposing application state without authentication.*
+*Figure 1 - DIAL status queries exposing application state without authentication.*
 
-### 02 — Unauthorized Remote Application Launch
+### 02 - Unauthorized Remote Application Launch
 
-Testing showed that an unauthenticated HTTP `POST` request to the DIAL application endpoint returned **HTTP 201** and a launch location for **AmazonInstantVideo**. A subsequent status query reported the application as `running`.
+Testing showed that an unauthenticated HTTP `POST` request to the DIAL application endpoint returned **HTTP 201** and a launch location for **AmazonInstantVideo** **Netflix** **Youtube**. A subsequent status query reported the application as `running`.
 
 **What an attacker can do:** Remotely start a supported installed application without using the TV remote or obtaining the owner's approval. Depending on the application's behavior, this can interrupt the current viewing experience, change the active on-screen application, and repeatedly disrupt normal television use.
 
@@ -49,17 +49,17 @@ Testing showed that an unauthenticated HTTP `POST` request to the DIAL applicati
 
 <img width="1280" height="766" alt="1" src="https://github.com/user-attachments/assets/4b84d9d2-3a44-4ea9-b7c5-4442737a4b7b" />
 
-*Figure 2 — Unauthenticated application launch returning HTTP 201, followed by a `running` state.*
+*Figure 2 - Unauthenticated application launch returning HTTP 201, followed by a `running` state.*
 
-### 03 — Unauthorized Application Termination and Viewing Disruption
+### 03 - Unauthorized Application Termination and Viewing Disruption
 
-The researcher sent an unauthenticated `DELETE` request to the DIAL run endpoint for **Netflix**. The service returned **HTTP 200**, and a subsequent status refresh showed Netflix as `stopped`.
+I have sent an unauthenticated `DELETE` request to the DIAL run endpoint for **Netflix**. The service returned **HTTP 200**, and a subsequent status refresh showed Netflix as `stopped`.
 
 **What an attacker can do:** Terminate an active streaming application remotely. Repeated termination requests could cause persistent viewing interruptions and prevent normal use of an affected application while the attacker maintains network access.
 
 **Impact:** Availability loss and unauthorized interruption of active streaming sessions. The evidence demonstrates application-level disruption, not a television-wide denial of service or permanent damage.
 
-### 04 — Client-Controlled Origin Header Accepted for YouTube Launch
+### 04 - Client-Controlled Origin Header Accepted for YouTube Launch
 
 The supplied test code and console output show a YouTube launch request that included the client-supplied header `Origin: https://www.youtube.com`. The displayed request returned **HTTP 201**.
 
