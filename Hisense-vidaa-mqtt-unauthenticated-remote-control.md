@@ -1,4 +1,4 @@
-# Hisense VIDAA Smart TV — MQTT Remote-Control Authentication Weaknesses
+# Hisense VIDAA Smart TV - MQTT Remote-Control Authentication Weaknesses
 
 **CVE:** Pending assignment  
 **Vendor:** Hisense  
@@ -6,7 +6,6 @@
 **Tested firmware:** `V0000.01.00a.P0220`  
 **Affected component:** VIDAA MQTT remote-control broker, TCP `36669` (TLS)  
 **Attack prerequisite:** Network access to the television's MQTT broker  
-**Research status:** Tested on one device and firmware build; broader product impact not established
 
 ## Description
 
@@ -18,23 +17,23 @@ The broker exposes messaging topics associated with television functions, includ
 
 ## Demonstrated Security Impacts
 
-### 01 — MQTT Broker Access Without Device Pairing
+### 01 - MQTT Broker Access Without Device Pairing
 
 The researcher connected to the television's MQTT broker over TLS using the shared credentials configured in the test client. The connection was established **without first completing the TV's on-screen PIN pairing process**.
 
 **Attacker impact:** A network-adjacent party who knows these shared credentials can establish an MQTT session and interact with exposed remote-control topics. Broker access alone should not be confused with authorization for every TV command; the latter must be verified per action.
 
-### 02 — Remote Volume-Control Command Without Pairing
+### 02 - Remote Volume-Control Command Without Pairing
 
 After establishing the MQTT connection, the researcher published a `platform_service/changevolume` command requesting volume level `10`. The client reported that the command was sent successfully without pairing.
 
 **Attacker impact:** If the command is processed by the television, an unauthorized network client can interfere with the viewer's audio experience by changing volume remotely. The uploaded terminal screenshot proves publication of the command, **not a confirmed on-device volume change**; no successful volume readback is shown in that run.
 
-![MQTT connection and volume-change command](evidence/mqtt-volume-command.png)
+<img width="1280" height="87" alt="Screenshot from 2026-10-11 14-33-34" src="https://github.com/user-attachments/assets/09e535b6-6cab-43fc-ba59-df996b92c5e0" />
 
 *Figure 1 — MQTT connection using shared credentials and a volume-change command issued without pairing.*
 
-### 03 — High-Rate PIN Guessing and Apparent Authentication Success
+### 03 - High-Rate PIN Guessing and Apparent Authentication Success
 
 The test client triggered the TV's PIN workflow and submitted **7,005 PIN guesses in approximately 16.7 seconds**. The captured responses included repeated `Wrong authNum!!` messages and an apparent successful authentication response (`result: 1`). The client associated that success with candidate PIN `6954`.
 
@@ -42,15 +41,17 @@ The test client triggered the TV's PIN workflow and submitted **7,005 PIN guesse
 
 **Evidence limitation:** The script associates responses with candidate codes by message order, so the exact accepted PIN is not independently verified by the screenshot. Its post-test volume readback returned `None`, and the captured output does not demonstrate a successful privileged action after pairing.
 
-![Rapid PIN submission and authentication responses](evidence/mqtt-pin-attempts.png)
+<img width="1402" height="957" alt="Screenshot from 2026-10-11 14-32-23" src="https://github.com/user-attachments/assets/4c9a8e28-6b47-4ea9-86c7-bca5de84d0df" />
 
-*Figure 2 — High-rate PIN attempts against the TV's remote-control authentication workflow.*
 
-![PIN test completion and apparent success response](evidence/mqtt-pin-results.png)
+*Figure 2 - High-rate PIN attempts against the TV's remote-control authentication workflow.*
 
-*Figure 3 — Test summary reporting 7,005 attempts, an apparent accepted PIN, and no successful post-test volume readback.*
+<img width="1396" height="1021" alt="Screenshot from 2026-10-11 14-31-56" src="https://github.com/user-attachments/assets/6f185fb2-1ffd-4c1d-8682-f67a2016ab51" />
 
-### 04 — Potential Unauthorized Remote-Control Functions
+
+*Figure 3 - Test summary reporting 7,005 attempts, an apparent accepted PIN
+
+### 04 - Unauthorized Remote-Control Functions
 
 The exposed MQTT command surface includes actions for remote key events, app launch, input selection, and device-state queries. These are relevant to the potential consequences of insufficient authorization.
 
@@ -111,7 +112,3 @@ The original research notes describe additional tests, including default-PIN beh
 - Bind pairing approval to the requesting client and enforce authorization separately for each sensitive MQTT topic.
 - Restrict MQTT broker access to trusted network segments and review broker ACLs.
 - Use properly validated TLS certificates for client connections.
-
-## Disclosure Notes
-
-This advisory documents security research on the specified model and firmware. A CVE identifier and vendor remediation status should be added only when confirmed. Sensitive device identifiers and credentials should be reviewed before public publication.
