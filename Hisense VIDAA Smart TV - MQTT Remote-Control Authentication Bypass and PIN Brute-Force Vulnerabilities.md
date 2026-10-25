@@ -1,6 +1,5 @@
-# Hisense VIDAA Smart TV - MQTT Remote-Control Authentication Weaknesses
+# Hisense VIDAA Smart TV - MQTT Remote-Control Authentication Bypass and PIN Brute-Force Vulnerabilities
 
-**CVE:** Pending assignment  
 **Vendor:** Hisense  
 **Product:** VIDAA Smart TV — model `55A57EXVT`  
 **Tested firmware:** `V0000.01.00a.P0220`  
@@ -13,19 +12,19 @@ The tested Hisense VIDAA Smart TV exposes an MQTT remote-control broker on TCP p
 
 The broker exposes messaging topics associated with television functions, including volume control, navigation, application launching, source management, and PIN-based remote-controller authorization. The research identified weaknesses in the separation between broker authentication and device authorization, together with rapid processing of PIN guesses.
 
-**The strongest directly visible findings are successful MQTT broker access using the shared credentials, publication of a volume-change command without pairing, and a rapid series of PIN submissions that received an apparent success response.** The screenshots do not independently confirm that the volume changed on the physical television or that privileged controls became available after the PIN response.
+**The strongest directly visible findings are successful MQTT broker access using the shared credentials (hisenseservice/multimqttservice), publication of a volume-change command without pairing, and a rapid series of PIN submissions that received an apparent success response.** The screenshots do not independently confirm that the volume changed on the physical television or that privileged controls became available after the PIN response.
 
 ## Demonstrated Security Impacts
 
 ### 01 - MQTT Broker Access Without Device Pairing
 
-The researcher connected to the television's MQTT broker over TLS using the shared credentials configured in the test client. The connection was established **without first completing the TV's on-screen PIN pairing process**.
+I have connected to the television's MQTT broker over TLS using the shared credentials configured in the test client. The connection was established **without first completing the TV's on-screen PIN pairing process**.
 
 **Attacker impact:** A network-adjacent party who knows these shared credentials can establish an MQTT session and interact with exposed remote-control topics. Broker access alone should not be confused with authorization for every TV command; the latter must be verified per action.
 
 ### 02 - Remote Volume-Control Command Without Pairing
 
-After establishing the MQTT connection, the researcher published a `platform_service/changevolume` command requesting volume level `10`. The client reported that the command was sent successfully without pairing.
+After establishing the MQTT connection, i have published a `platform_service/changevolume` command requesting volume level `10`. The client reported that the command was sent successfully without pairing.
 
 **Attacker impact:** If the command is processed by the television, an unauthorized network client can interfere with the viewer's audio experience by changing volume remotely. The uploaded terminal screenshot proves publication of the command, **not a confirmed on-device volume change**; no successful volume readback is shown in that run.
 
@@ -43,11 +42,9 @@ The test client triggered the TV's PIN workflow and submitted **7,005 PIN guesse
 
 <img width="1402" height="957" alt="Screenshot from 2026-10-11 14-32-23" src="https://github.com/user-attachments/assets/4c9a8e28-6b47-4ea9-86c7-bca5de84d0df" />
 
-
 *Figure 2 - High-rate PIN attempts against the TV's remote-control authentication workflow.*
 
 <img width="1396" height="1021" alt="Screenshot from 2026-10-11 14-31-56" src="https://github.com/user-attachments/assets/6f185fb2-1ffd-4c1d-8682-f67a2016ab51" />
-
 
 *Figure 3 - Test summary reporting 7,005 attempts, an apparent accepted PIN
 
