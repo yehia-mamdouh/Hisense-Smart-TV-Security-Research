@@ -1,8 +1,8 @@
-# CVE-2026-XXXXX — Unauthenticated App State Surveillance and Remote App Control via DIAL
+# CVE-2026-XXXXX  Unauthenticated App State Surveillance and Remote App Control via DIAL
 
 ### Hisense VIDAA Smart TV · Security Advisory
 
-**Researcher:** Yehia Elghaly · **Status:** Coordinated disclosure — CVE identifier pending
+**Researcher:** Yehia Elghaly · **Status:** Coordinated disclosure - CVE identifier pending
 
 > [!IMPORTANT]
 > **Draft / Private.** Replace `CVE-2026-XXXXX` with the assigned identifier before publication. Findings are based on the tested device and firmware; other models and versions have not been verified.
@@ -15,7 +15,7 @@
 | Affected service | DIAL (Discovery and Launch), TCP `56789` |
 | Attack vector | Network-adjacent HTTP access to the exposed service |
 | Authentication | No credentials or device pairing required in the tested configuration |
-| CVE | `CVE-2026-XXXXX` — pending |
+| CVE | `CVE-2026-XXXXX` |
 
 ## Vulnerability Overview
 
@@ -35,9 +35,9 @@ An unauthenticated network client can query the DIAL service for application sta
 
 **Impact:** Loss of privacy concerning application usage and household viewing activity. Application presence alone does **not** prove an active paid subscription, identify the account holder, or disclose the exact program being watched.
 
-![Unauthenticated DIAL application-state monitoring console](evidence/dial-app-state.png)
+<img width="1329" height="410" alt="2" src="https://github.com/user-attachments/assets/2ed6bbdd-5de0-479e-a5d8-c686ee88ea30" />
 
-*Figure 1 — DIAL status queries exposing application state without authentication. YouTube returned HTTP 403 in this capture, so its state was not confirmed by that response.*
+*Figure 1 — DIAL status queries exposing application state without authentication.*
 
 ### 02 — Unauthorized Remote Application Launch
 
@@ -47,7 +47,7 @@ Testing showed that an unauthenticated HTTP `POST` request to the DIAL applicati
 
 **Impact:** Unauthorized control over the TV's application lifecycle and interference with the viewer's current session.
 
-![AmazonInstantVideo launch accepted by DIAL with HTTP 201](evidence/dial-app-control.png)
+<img width="1280" height="766" alt="1" src="https://github.com/user-attachments/assets/4b84d9d2-3a44-4ea9-b7c5-4442737a4b7b" />
 
 *Figure 2 — Unauthenticated application launch returning HTTP 201, followed by a `running` state.*
 
@@ -58,10 +58,6 @@ The researcher sent an unauthenticated `DELETE` request to the DIAL run endpoint
 **What an attacker can do:** Terminate an active streaming application remotely. Repeated termination requests could cause persistent viewing interruptions and prevent normal use of an affected application while the attacker maintains network access.
 
 **Impact:** Availability loss and unauthorized interruption of active streaming sessions. The evidence demonstrates application-level disruption, not a television-wide denial of service or permanent damage.
-
-![Netflix termination and state verification via DIAL](evidence/dial-launch.png)
-
-*Figure 3 — HTTP 200 response to an unauthenticated Netflix termination request, followed by verification that the application was stopped.*
 
 ### 04 — Client-Controlled Origin Header Accepted for YouTube Launch
 
@@ -128,8 +124,5 @@ The DIAL service did not enforce an authentication or user-approval boundary for
 ## Disclosure
 
 **Researcher:** Yehia Elghaly  
-**CVE:** `CVE-2026-XXXXX` (placeholder; assignment pending)  
+**CVE:** `CVE-2026-XXXXX`
 **Tested device:** Hisense 55A57EXVT / firmware `V0000.01.00a.P0220`  
-**Coordination:** VulnCheck and vendor; publication date to be confirmed.
-
-> **Publication note:** Keep this advisory private until the coordinated disclosure date. The screenshots are research evidence; redact internal IP addresses and other identifying information if required before publishing.
