@@ -1,4 +1,4 @@
-Unauthenticated WebDriver Access via QA Build in Production Firmware in Google Cobalt
+# Unauthenticated WebDriver Access via QA Build in Production Firmware in Google Cobalt
 
 **Security advisory | Yehia Elghaly | Coordinated disclosure**
 
