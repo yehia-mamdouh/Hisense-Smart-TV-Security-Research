@@ -1,9 +1,9 @@
-# CVE-2026-XXXXX - Unauthorized Content Injection via DLNA AVTransport on Hisense VIDAA Smart TV
+# Unauthorized Content Injection via DLNA AVTransport on Hisense VIDAA Smart TV
 
 **Security Research Advisory** · **Yehia Elghaly** · **Coordinated Disclosure**
 
 > [!IMPORTANT]
-> **Draft - CVE identifier pending.** Findings apply to the tested device and firmware. Coordinate publication with VulnCheck and the vendor.
+> **CVE ID pending.** This document describes a vulnerability verified on one Hisense 55A57EXVT running firmware V0000.01.00a.P0220.
 
 | Field | Tested configuration |
 |---|---|
@@ -12,7 +12,6 @@
 | Firmware | `V0000.01.00a.P0220` |
 | Affected service | UPnP/DLNA AVTransport SOAP, TCP `38400` |
 | Attack prerequisite | Network access to the AVTransport service; one-time acceptance of a DLNA consent popup for on-screen playback in the demonstrated workflow |
-| CVE | `CVE-2026-XXXXX` (placeholder) |
 
 ## Executive Summary
 
@@ -48,11 +47,10 @@ The test console records successful `SetAVTransportURI`, `Play`, and `Stop` oper
 
 <img width="1280" height="851" alt="Screenshot from 2026-10-09 19-19-41" src="https://github.com/user-attachments/assets/39f9cbbc-4a0b-41df-bc61-df914549b878" />
 
-
 *Figure 3 - SOAP command results and server-side fetch logs for video, image, and HTML test resources.*
 
 
-### 03 — Persistent Control After Initial DLNA Approval
+### 03 - Persistent Control After Initial DLNA Approval
 
 The supplied advisory reports that once the device's DLNA approval prompt is accepted, later media commands can execute without an additional user prompt for each resource.
 
