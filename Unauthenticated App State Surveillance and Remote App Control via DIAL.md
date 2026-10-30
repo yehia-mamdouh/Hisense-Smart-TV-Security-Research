@@ -67,8 +67,6 @@ The supplied test code and console output show a YouTube launch request that inc
 
 **Impact:** The observed Origin-based restriction is insufficient as an authentication mechanism for this tested request. The result supports unauthorized launch behavior; it does not establish access to YouTube account credentials or bypass of YouTube's own login controls.
 
-*Evidence: The terminal capture in Figure 3 also shows the client-supplied YouTube Origin header and the HTTP 201 response.*
-
 ## Attack-Path Overview
 
 The diagram summarizes the observed entry point and its distinct confidentiality, integrity, and availability consequences.
