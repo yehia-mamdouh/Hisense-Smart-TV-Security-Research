@@ -17,7 +17,7 @@
 
 The tested Hisense VIDAA Smart TV accepts media URLs supplied by a network client through the DLNA AVTransport `SetAVTransportURI` interface. Following the one-time on-screen DLNA authorization in the tested workflow, an attacker on the local network can cause the TV to fetch and display attacker-hosted media **without further confirmation for each command**.
 
-The researcher demonstrated HTTP requests from the TV to a controlled content server and photographed attacker-controlled content rendered on the physical television. The primary security impact is **unauthorized control of displayed media**, which can interrupt normal viewing and support deceptive or misleading on-screen content.
+I have demonstrated HTTP requests from the TV to a controlled content server and photographed attacker-controlled content rendered on the physical television. The primary security impact is **unauthorized control of displayed media**, which can interrupt normal viewing and support deceptive or misleading on-screen content.
 
 ## Root Cause & Attack Surface
 
@@ -27,7 +27,7 @@ The AVTransport SOAP service processes client-supplied media URIs without suffic
 
 ### 01 - Remote Injection of Attacker-Controlled Content onto the TV Screen
 
-A network-adjacent client can direct the television to retrieve a media resource from an attacker-controlled HTTP server and, following the initial DLNA approval, render supported content on the physical screen. The accompanying physical-device evidence shows a researcher-generated content-injection display and a media playback screen.
+A network-adjacent client can direct the television to retrieve a media resource from an attacker-controlled HTTP server and, following the initial DLNA approval, render supported content on the physical screen. The accompanying physical-device evidence shows a generated content-injection display and a media playback screen.
 
 **Attacker impact:** An unauthorized network client could replace or interrupt what the viewer is watching with arbitrary *supported media*, including deceptive notices or impersonated security messages embedded as images or video. This enables on-screen social engineering and interference with normal television use.
 
@@ -81,8 +81,3 @@ flowchart TD
 - Do not fetch or process untrusted media URLs before the required authorization decision.
 - Provide users with controls to review and revoke paired DLNA devices; consider confirmation for disruptive playback changes.
 - Verify fixes across affected firmware versions and TV models.
-
-## Disclosure
-
-**Researcher:** Yehia Elghaly  
-**CVE:** `CVE-2026-XXXXX` — awaiting assignment  
