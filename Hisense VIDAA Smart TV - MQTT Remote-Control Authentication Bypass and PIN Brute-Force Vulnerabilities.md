@@ -6,6 +6,8 @@
 **Affected component:** VIDAA MQTT remote-control broker, TCP `36669` (TLS)  
 **Attack prerequisite:** Network access to the television's MQTT broker  
 
+**Researcher:** Yehia Elghaly · **Status:** Coordinated disclosure
+
 ## Description
 
 The tested Hisense VIDAA Smart TV exposes an MQTT remote-control broker on TCP port `36669` that accepts a shared, product-level credential pair without requiring an initial on-screen device-pairing step to establish the broker connection.
