@@ -73,7 +73,7 @@ The demonstrated impact includes unauthorized browser-context JavaScript executi
 
 **Attacker capability:** The unauthenticated JavaScript execution can be used to **collect internal TV configuration and identifiers and send them beyond the local network**. This changes the exposure from passive access to an actionable confidentiality compromise.
 
-**Observed result:** The researcher extracted **42–43 `localStorage` entries** across test runs, including ACR and advertising preferences, location-setting data, HDMI state, MAC-address-formatted keys, and advertising-service version/signature metadata. A controlled Webhook.site receiver recorded an approximately **2.4 KB HTTP POST** containing structured device information and `localStorage` values.
+**Observed result:** The researcher extracted **42-43 `localStorage` entries** across test runs, including ACR and advertising preferences, location-setting data, HDMI state, MAC-address-formatted keys, and advertising-service version/signature metadata. A controlled Webhook.site receiver recorded an approximately **2.4 KB HTTP POST** containing structured device information and `localStorage` values.
 
 **Attack sequence:** **LAN access → unauthenticated WebDriver session → browser-context JavaScript → application data collection → external HTTP POST.**
 
@@ -128,8 +128,3 @@ flowchart TD
 - If diagnostic access is required, restrict its network exposure and enforce strong authentication, authorization, and user-approved pairing.
 - Separate automation contexts from sensitive UI state and native TV interfaces; audit production build/release controls.
 
-## Disclosure
-
-**Researcher:** Yehia Elghaly  
-**CVE:** `CVE-2026-XXXXX` 
-**Research presentation:** *Pwned on the Couch: Hacking Smart TVs into Surveillance Devices* - Black Hat MEA 2026
