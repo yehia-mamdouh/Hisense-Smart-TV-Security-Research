@@ -6,6 +6,8 @@
 **Affected services:** UPnP/DLNA RenderingControl, AVTransport, and ConnectionManager on TCP `38400`  
 **Attack prerequisite:** LAN access to the UPnP control service; behavior was tested after device pairing and during a visible pairing popup.
 
+**Researcher:** Yehia Elghaly · **Status:** Coordinated disclosure
+
 ## Description
 
 The Hisense VIDAA Smart TV exposes UPnP SOAP control operations that permit a network client to read media and playback state and modify TV behavior without a separate authorization prompt for each operation. In controlled testing, the researcher successfully changed the television's volume using `RenderingControl:SetVolume` and verified the resulting value with `GetVolume`. The AVTransport interface also accepted playback-related commands, including `Stop` and `SetPlayMode`.
