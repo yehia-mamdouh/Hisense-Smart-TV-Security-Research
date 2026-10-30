@@ -2,7 +2,7 @@
 
 ### Hisense VIDAA Smart TV · Security Advisory
 
-**Researcher:** Yehia Elghaly · **Status:** Coordinated disclosure - CVE identifier pending
+**Researcher:** Yehia Elghaly · **Status:** Coordinated disclosure
 
 > [!IMPORTANT]
 > **CVE ID pending.** This document describes a vulnerability verified on one Hisense 55A57EXVT running firmware V0000.01.00a.P0220.
