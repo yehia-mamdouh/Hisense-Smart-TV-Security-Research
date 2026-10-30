@@ -134,7 +134,7 @@ The screenshot records the following console results:
 
 **Mechanism distinction:** The attached callback script performs a finite series of AVTransport operations with waits and a retry; it is **not** an unrestricted high-volume SOAP flooding loop. My observed freeze during this script therefore supports an **AVTransport-triggered denial-of-service condition**, but does not by itself establish that request flooding or missing rate limiting was the cause. The precise failure mechanism requires further investigation.
 
-## 05 — Reproduction methodology (high level)
+## 05 - Reproduction methodology (high level)
 
 In an isolated, authorized laboratory environment, establish baseline TV responsiveness and AVTransport SOAP response times, then compare them against a controlled, bounded series of `SetAVTransportURI` requests. Record whether the on-screen UI, remote control, and physical controls remain responsive. Preserve request/response timestamps, device video, packet captures, and recovery steps. Stop immediately if responsiveness degrades.
 
@@ -157,18 +157,11 @@ In an isolated, authorized laboratory environment, establish baseline TV respons
 
 **Temporary mitigation:** Isolate the TV from untrusted LAN clients and filter access to TCP 38400 where network controls permit, while preserving required legitimate features.
 
-## 08 - Coordinated disclosure and validation status
-
-I reported the broader Hisense VIDAA security findings to the vendor on **27 April 2026** and sent a reminder on **2 May 2026**. As of **25 October 2026**, I had not received a vendor response. These dates reflect my disclosure records; they are not independently verified here.
-
-
 | Item | Status |
 |---|---|
 | Original researcher advisory | Provided |
 | Hard-freeze behavior | Physically confirmed by me after the AVTransport callback test; remote and physical power controls unresponsive, mains power cycle required |
 | Callback test | Completed; `Play` timeout of 8,000 ms logged; no HTTP callbacks received; device-wide freeze confirmed by physical observation |
-| Vendor acknowledgement / patch | No vendor response reported as of 25 October 2026; no patch verified |
-| CVE assignment | Not supplied |
 
 **Research scope:** Hisense 55A57EXVT, VIDAA firmware V0000.01.00a.P0220. Findings should not be generalized to all Hisense or VIDAA products without additional testing.
 
