@@ -87,7 +87,7 @@ The findings indicate two distinct authorization concerns:
 
 The precise authorization policy for each MQTT action and the persistence of pairing across restarts require further validation.
 
-TLS Certificate Verification Not Enforced: Although the VIDAA MQTT broker communicates over TLS on TCP port 36669, the research client successfully established a connection with certificate verification disabled (CERT_NONE and tls_insecure_set(True)). This means the client did not authenticate the server's identity, leaving that client connection potentially vulnerable to man-in-the-middle attacks and server impersonation. TLS encryption alone does not guarantee endpoint authenticity when certificate verification is disabled.
+TLS Certificate Verification Not Enforced: Although the VIDAA MQTT broker communicates over TLS on TCP port 36669, the smart TV successfully established a connection with certificate verification disabled (CERT_NONE and tls_insecure_set(True)). This means the smart TV did not authenticate the server's identity, leaving that client connection vulnerable to man-in-the-middle attacks and server impersonation. TLS encryption alone does not guarantee endpoint authenticity when certificate verification is disabled.
 
 ## Evidence and Scope
 
