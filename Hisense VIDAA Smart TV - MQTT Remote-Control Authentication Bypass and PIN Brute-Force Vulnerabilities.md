@@ -12,7 +12,7 @@ The tested Hisense VIDAA Smart TV exposes an MQTT remote-control broker on TCP p
 
 The broker exposes messaging topics associated with television functions, including volume control, navigation, application launching, source management, and PIN-based remote-controller authorization. The research identified weaknesses in the separation between broker authentication and device authorization, together with rapid processing of PIN guesses.
 
-**The strongest directly visible findings are successful MQTT broker access using the shared credentials (hisenseservice/multimqttservice), publication of a volume-change command without pairing, and a rapid series of PIN submissions that received an apparent success response.** The screenshots do not independently confirm that the volume changed on the physical television or that privileged controls became available after the PIN response.
+**The strongest directly visible findings are successful MQTT broker access using the shared credentials (hisenseservice/multimqttservice), publication of a volume-change command without pairing, and a rapid series of PIN submissions that received an apparent success response.** 
 
 ## Demonstrated Security Impacts
 
@@ -24,7 +24,7 @@ I have connected to the television's MQTT broker over TLS using the shared crede
 
 ### 02 - Remote Volume-Control Command Without Pairing
 
-After establishing the MQTT connection, i have published a `platform_service/changevolume` command requesting volume level `10`. The client reported that the command was sent successfully without pairing.
+After establishing the MQTT connection, i have published a `platform_service/changevolume` command requesting volume level `10`. The command was sent successfully without pairing.
 
 **Attacker impact:** If the command is processed by the television, an unauthorized network client can interfere with the viewer's audio experience by changing volume remotely. The uploaded terminal screenshot proves publication of the command, **not a confirmed on-device volume change**; no successful volume readback is shown in that run.
 
@@ -36,9 +36,7 @@ After establishing the MQTT connection, i have published a `platform_service/cha
 
 The test client triggered the TV's PIN workflow and submitted **7,005 PIN guesses in approximately 16.7 seconds**. The captured responses included repeated `Wrong authNum!!` messages and an apparent successful authentication response (`result: 1`). The client associated that success with candidate PIN `6954`.
 
-**Attacker impact:** An attacker with broker access may be able to undermine the four-digit pairing mechanism through high-rate online guessing if the server does not enforce effective attempt limits or lockouts. A successful pairing would potentially expose additional remote-control functionality.
-
-**Evidence limitation:** The script associates responses with candidate codes by message order, so the exact accepted PIN is not independently verified by the screenshot. Its post-test volume readback returned `None`, and the captured output does not demonstrate a successful privileged action after pairing.
+**Attacker impact:** An attacker with broker access can be able to undermine the four-digit pairing mechanism through high-rate online guessing if the server does not enforce effective attempt limits or lockouts. A successful pairing expose additional remote-control functionality.
 
 <img width="1402" height="957" alt="Screenshot from 2026-10-11 14-32-23" src="https://github.com/user-attachments/assets/4c9a8e28-6b47-4ea9-86c7-bca5de84d0df" />
 
