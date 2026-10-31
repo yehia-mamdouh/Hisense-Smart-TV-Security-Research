@@ -76,7 +76,7 @@ flowchart TD
 
 ## 03 - Technical evidence
 
-I collected packet captures and network health-monitor logs during an isolated single-request test on **31 October 2026 (UTC)**.
+I collected packet captures and network health-monitor logs during an isolated single-request test on.
 
 | Time (UTC) | Observation |
 |---|---|
