@@ -101,7 +101,7 @@ I have **not** demonstrated remote code execution, credential theft, data exfilt
 
 ## 05 - Proof of concept (illustrative)
 
-The following example shows the **general structure** of a UPnP AVTransport SOAP message. I am intentionally **not publishing the complete freeze-triggering metadata, full exploit script, or request automation** in this README.
+The following example shows the **general structure** of a UPnP AVTransport SOAP message.
 
 ```http
 POST /upnp/control/mingusavtr HTTP/1.1
@@ -119,7 +119,7 @@ SOAPAction: "urn:schemas-upnp-org:service:AVTransport:1#GetTransportInfo"
 </s:Envelope>
 ```
 
-This is a **non-exploit, illustrative request**; it does not reproduce the denial of service. I can provide detailed reproduction artifacts and raw evidence privately to the vendor or a vulnerability coordinator for authorized validation.
+This is a **non-exploit, illustrative request**; it does not reproduce the denial of service.
 
 ### Proof-of-concept console screenshot
 
