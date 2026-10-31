@@ -1,6 +1,6 @@
 # Hisense VIDAA Smart TV — Unauthenticated UPnP AVTransport Denial of Service
 
-> **Security research advisory | Availability impact | LAN-adjacent attack surface | **
+> ** Security research advisory | Availability impact | LAN-adjacent attack surface | **
 
 ## Executive summary
 
