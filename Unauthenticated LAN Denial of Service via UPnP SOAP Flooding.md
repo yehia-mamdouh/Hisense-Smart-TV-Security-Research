@@ -148,9 +148,3 @@ The consent-dependent temporary freezes may involve a different failure path. I 
 ## 08 - Scope and disclosure
 
 I tested **one Hisense 55A57EXVT** running firmware **V0000.01.00a.P0220**. My findings are based on direct device observation, console output, packet captures, and TCP health-monitor logs. I have not confirmed the native root cause or assessed the impact on other models or firmware versions.
-
-I am with holding the complete freeze-triggering payload and automation from this public README. Detailed reproduction evidence can be shared privately for coordinated remediation.
-
----
-
-*Responsible security disclosure - testing performed on my own device.*
