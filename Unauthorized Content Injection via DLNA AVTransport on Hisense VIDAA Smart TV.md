@@ -41,7 +41,7 @@ A network-adjacent client can direct the television to retrieve a media resource
 
 ### 02 - Untrusted Media Fetching and Playback Control
 
-The test console records successful `SetAVTransportURI`, `Play`, and `Stop` operations (HTTP 200) and confirms that the television fetched resources from the researcher's HTTP server. The log records requests for an H.264 MP4, a JPEG image, and an HTML document.
+The test console records successful `SetAVTransportURI`, `Play`, and `Stop` operations (HTTP 200) and confirms that the television fetched resources from the HTTP server. The log records requests for an H.264 MP4, a JPEG image, and an HTML document.
 
 **Attacker impact:** A network client able to invoke the AVTransport commands can make the television request externally hosted content and initiate or stop playback. This could disrupt active viewing or expose the TV to attacker-selected media resources.
 
