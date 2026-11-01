@@ -54,8 +54,6 @@ The exposed MQTT command surface includes actions for remote key events, app lau
 
 **Potential attacker impact, subject to per-action verification:** Interruption of viewing, unwanted navigation or application launches, changes to the active input, and disclosure of TV state.
 
-These functions are present in the supplied test code and research notes, but **the three supplied screenshots do not independently establish successful execution of all of them without pairing**.
-
 ## Attack-Path Overview
 
 ```mermaid
