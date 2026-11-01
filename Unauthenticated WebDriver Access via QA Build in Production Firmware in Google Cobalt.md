@@ -40,7 +40,7 @@ The demonstrated impact includes unauthorized browser-context JavaScript executi
 
 <img width="1396" height="1127" alt="afc45393-fce8-45be-8ac4-4f5afa7c1f69" src="https://github.com/user-attachments/assets/995c119c-b426-42b5-8156-2add3434fcb9" />
 
-*Figure 3 - Full-screen warning injected by the researcher, not a genuine Hisense security notice.*
+*Figure 3 - Full-screen warning injected, not a genuine Hisense security notice.*
 
 ### 03 - Unauthorized Modification of ACR and Advertising-Related Settings
 
@@ -73,7 +73,7 @@ The demonstrated impact includes unauthorized browser-context JavaScript executi
 
 **Attacker capability:** The unauthenticated JavaScript execution can be used to **collect internal TV configuration and identifiers and send them beyond the local network**. This changes the exposure from passive access to an actionable confidentiality compromise.
 
-**Observed result:** The researcher extracted **42-43 `localStorage` entries** across test runs, including ACR and advertising preferences, location-setting data, HDMI state, MAC-address-formatted keys, and advertising-service version/signature metadata. A controlled Webhook.site receiver recorded an approximately **2.4 KB HTTP POST** containing structured device information and `localStorage` values.
+**Observed result:** I have extracted **42-43 `localStorage` entries** across test runs, including ACR and advertising preferences, location-setting data, HDMI state, MAC-address-formatted keys, and advertising-service version/signature metadata. A controlled Webhook.site receiver recorded an approximately **2.4 KB HTTP POST** containing structured device information and `localStorage` values.
 
 **Attack sequence:** **LAN access → unauthenticated WebDriver session → browser-context JavaScript → application data collection → external HTTP POST.**
 
