@@ -10,7 +10,7 @@
 
 ## Description
 
-The Hisense VIDAA Smart TV exposes UPnP SOAP control operations that permit a network client to read media and playback state and modify TV behavior without a separate authorization prompt for each operation. In controlled testing, the researcher successfully changed the television's volume using `RenderingControl:SetVolume` and verified the resulting value with `GetVolume`. The AVTransport interface also accepted playback-related commands, including `Stop` and `SetPlayMode`.
+The Hisense VIDAA Smart TV exposes UPnP SOAP control operations that permit a network client to read media and playback state and modify TV behavior without a separate authorization prompt for each operation. In controlled testing, i have successfully changed the television's volume using `RenderingControl:SetVolume` and verified the resulting value with `GetVolume`. The AVTransport interface also accepted playback-related commands, including `Stop` and `SetPlayMode`.
 
 A separate timing test showed that **six consecutive `SetAVTransportURI`/`Play` request pairs returned HTTP 200 while a DLNA pairing popup was visible on the television**. `GetVolume` also returned HTTP 200 during that window. These observations indicate that the visible popup did not block SOAP command handling in the tested sequence. HTTP success alone does not prove that all requested media actually played.
 
