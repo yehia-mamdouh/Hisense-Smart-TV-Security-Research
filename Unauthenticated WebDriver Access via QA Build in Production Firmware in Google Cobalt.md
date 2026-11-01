@@ -3,7 +3,7 @@
 **Security advisory | Yehia Elghaly | Coordinated disclosure**
 
 > [!IMPORTANT]
-> **CVE ID pending.** This document describes a vulnerability verified on one Hisense 55A57EXVT running firmware `V0000.01.00a.P0220`.
+> This document describes a vulnerability verified on one Hisense 55A57EXVT running firmware `V0000.01.00a.P0220`.
 
 | Affected device | Exposed interface | Access required |
 |---|---|---|
