@@ -46,7 +46,7 @@ The test client triggered the TV's PIN workflow and submitted **7,005 PIN guesse
 
 <img width="1396" height="1021" alt="Screenshot from 2026-10-11 14-31-56" src="https://github.com/user-attachments/assets/6f185fb2-1ffd-4c1d-8682-f67a2016ab51" />
 
-*Figure 3 - Test summary reporting 7,005 attempts, an apparent accepted PIN
+Figure 3 - Test summary reporting 7,005 attempts, an apparent accepted PIN
 
 ### 04 - Unauthorized Remote-Control Functions
 
