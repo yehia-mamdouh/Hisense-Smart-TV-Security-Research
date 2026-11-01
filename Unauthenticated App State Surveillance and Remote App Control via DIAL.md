@@ -120,5 +120,4 @@ The DIAL service did not enforce an authentication or user-approval boundary for
 ## Disclosure
 
 **Researcher:** Yehia Elghaly  
-**CVE:** `CVE-2026-XXXXX`
 **Tested device:** Hisense 55A57EXVT / firmware `V0000.01.00a.P0220`  
