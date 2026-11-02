@@ -41,7 +41,7 @@ The observed consequences span **browser-context JavaScript execution, applicati
 
 | # | Vulnerability / exposed service | Security impact | Evidence summary |
 |:--:|:--|:--|:--|
-| **01** | **01 — Cobalt WebDriver Exposure](Unauthenticated%20WebDriver%20Access%20via%20QA%20Build%20in%20Production%20Firmware%20in%20Google%20Cobalt.md** · TCP `4444` | Browser-context JavaScript execution, application storage disclosure, external HTTP data exfiltration, UI manipulation | Existing WebDriver session accessed; internal storage extracted; outbound webhook POST observed |
+| **01** | [01 — Cobalt WebDriver Exposure](Unauthenticated%20WebDriver%20Access%20via%20QA%20Build%20in%20Production%20Firmware%20in%20Google%20Cobalt.md)· TCP `4444` | Browser-context JavaScript execution, application storage disclosure, external HTTP data exfiltration, UI manipulation | Existing WebDriver session accessed; internal storage extracted; outbound webhook POST observed |
 | **02** | **DIAL Application Control** · TCP `56789` | Unauthorized app-state inspection, application launch, and termination | DIAL state queried; app launch returned HTTP `201`; app termination returned HTTP `200` |
 | **03** | **DLNA / AVTransport Content Injection** · TCP `38400` | Unwanted on-screen media and content presentation; playback interference | Media fetches logged and test content displayed on physical TV; consent behavior varies by workflow |
 | **04** | **UPnP / SOAP Denial of Service** · TCP `38400` | Complete TV unresponsiveness requiring a physical power-cycle, as reported in the freeze test | I confirmed a complete TV freeze with no response to the remote or physical power button; restoring operation required disconnecting and reconnecting mains power |
