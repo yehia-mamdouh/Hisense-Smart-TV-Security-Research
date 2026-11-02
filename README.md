@@ -134,7 +134,7 @@ For owners and network administrators, **isolating Smart TVs from untrusted LAN 
 
 ## ⚖️ Responsible Research and Usage
 
-This repository is published for defensive security research, vulnerability analysis, and coordinated disclosure. I performed testing against a device under my control. Do not test systems without authorization.
+This repository is published for defensive security research, vulnerability analysis, and responsible public disclosure following vendor notification. All testing was performed against a device under my control. Do not test systems without authorization.
 
 **No universal exploitability claim is made:** The documented results apply to the tested configuration unless additional affected versions are established.
 
