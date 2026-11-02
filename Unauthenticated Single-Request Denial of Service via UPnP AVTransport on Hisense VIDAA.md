@@ -1,5 +1,4 @@
-# Hisense VIDAA Smart TV - Unauthenticated UPnP AVTransport Denial of Service
-
+# Unauthenticated Single-Request Denial of Service via UPnP AVTransport on Hisense VIDAA
 > Security advisory | Availability impact | Local-network attack surface
 
 ## Executive summary
