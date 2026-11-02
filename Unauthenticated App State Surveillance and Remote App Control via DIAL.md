@@ -13,7 +13,6 @@
 | Affected service | DIAL (Discovery and Launch), TCP `56789` |
 | Attack vector | Network-adjacent HTTP access to the exposed service |
 | Authentication | No credentials or device pairing required in the tested configuration |
-| CVE | `CVE-2026-XXXXX` |
 
 ## Vulnerability Overview
 
