@@ -1,5 +1,7 @@
 # Unauthenticated App State Surveillance and Remote App Control via DIAL
 
+**CVE: CVE⁠-⁠2026⁠-⁠123994**
+
 ### Hisense VIDAA Smart TV · Security Advisory
 
 > [!IMPORTANT]
