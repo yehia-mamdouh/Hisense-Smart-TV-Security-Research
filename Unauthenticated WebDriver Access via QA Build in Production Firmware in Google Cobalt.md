@@ -1,5 +1,7 @@
 # Unauthenticated WebDriver Access via QA Build in Production Firmware in Google Cobalt
 
+**CVE⁠-⁠2026⁠-⁠123993**
+
 **Security advisory | Yehia Elghaly | Coordinated disclosure**
 
 > [!IMPORTANT]
