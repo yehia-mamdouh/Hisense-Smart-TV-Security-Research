@@ -1,5 +1,7 @@
 # Unauthorized Content Injection via DLNA AVTransport on Hisense VIDAA Smart TV
 
+**CVE: CVE⁠-⁠2026⁠-⁠123995**
+
 **Security Research Advisory** · **Yehia Elghaly** · **Coordinated Disclosure**
 
 > [!IMPORTANT]
