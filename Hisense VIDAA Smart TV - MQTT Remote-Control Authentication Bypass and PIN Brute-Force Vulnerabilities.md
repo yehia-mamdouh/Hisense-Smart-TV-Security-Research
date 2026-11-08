@@ -1,5 +1,7 @@
 # Hisense VIDAA Smart TV - MQTT Remote-Control Authentication Bypass and PIN Brute-Force Vulnerabilities
 
+**CVE: CVE⁠-⁠2026⁠-⁠123998**
+
 **Vendor:** Hisense  
 **Product:** VIDAA Smart TV — model `55A57EXVT`  
 **Tested firmware:** `V0000.01.00a.P0220`  
