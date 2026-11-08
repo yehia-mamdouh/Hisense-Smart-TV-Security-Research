@@ -1,4 +1,7 @@
 # Unauthenticated Single-Request Denial of Service via UPnP AVTransport on Hisense VIDAA
+
+**CVE: CVE⁠-⁠2026⁠-⁠123996**
+
 > Security advisory | Availability impact | Local-network attack surface
 
 ## Executive summary
